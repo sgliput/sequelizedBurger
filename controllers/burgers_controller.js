@@ -3,27 +3,25 @@ var db = require("../models");
 module.exports = function (app) {
 
     app.get("/", function (req, res) {
-        //Gets all burgers from the all method in the burger.js model
+        //Gets all burgers with the findAll sequelize method, including related customers
 
         db.burger.findAll({
             include: [db.customer]
         })
             .then(function (dbBurgers) {
-                //Displays the array of burgers in index.handlebars
-                //res.json(dbBurgers);
-                //res.render("index", {burgers: dbBurgers});
+                //Stringifies the array of burgers in the console
                 console.log(JSON.stringify(dbBurgers, null, 2));
-
+                //Gets all customers with the findAll sequelize method, including related burgers
                 db.customer.findAll({
                     include: [db.burger]
                 })
                     .then(function (dbCustomers) {
-                        //Displays the array of customers in index.handlebars
-                        //res.json(dbCustomers);
+                        //Combines the arrays of burgers and customers in one object
                         var toRender = {
                             burgers: dbBurgers,
                             customers: dbCustomers
                         }
+                        //Renders the index.handlebars file, passing it both arrays of burgers and customers
                         res.render("index", toRender);
                         console.log(JSON.stringify(dbCustomers, null, 2));
                     });
@@ -32,7 +30,7 @@ module.exports = function (app) {
     });
 
     app.post("/api/burgers", function (req, res) {
-        //Posts a new burger with the insert method in the burger.js model, passing it the name of the new burger
+        //Posts a new burger with the create sequelize method, passing it the name of the new burger,the devoured status, and the customerId of its creator
         db.burger.create({
             burger_name: req.body.name,
             devoured: false,
@@ -53,14 +51,8 @@ module.exports = function (app) {
                 }
             })
             .then(function (dbBurger) {
-                // if (result.changedRows == 0) {
-                //     // If no rows were changed, then the ID must not exist, so 404
-                //     return res.status(404).end();
-                // } else {
                 res.json(dbBurger);
                 res.status(200).end();
-                //}
-
             });
     });
 
