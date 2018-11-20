@@ -5,10 +5,12 @@
       </div>
       <div class="col-md-6">
         <h1>
-           Welcome
-          <br><i class="fas fa-utensils"></i>  to  <i class="fas fa-utensils"></i>
+          Welcome
+          <br>
+          <i class="fas fa-utensils"></i> to
+          <i class="fas fa-utensils"></i>
           <br>Nerd Burger!
-          
+
         </h1>
         <br>
         <h2>May the force take your order?</h2>
@@ -29,13 +31,46 @@
     <br>
   </div>
   <div class="row">
+    <p class="nameInput">To order burgers from our replicator, you must first input your name and rank into the computer.</p>
+    <br>
+    <br>
+  </div>
+  <div class="row">
+    <br>
+    <form class="customer-form">
+
+      <div class="form-group">
+        <label for="custName">Your Name:</label>
+        <input type="text" id="customerName" name="custName">
+        <br>
+        <label for="custRank">Your Rank:</label>
+        <select name="custRank" id="rankList" form="customer-form">
+          <option value="Admiral">Admiral</option>
+          <option value="Captain">Captain</option>
+          <option value="Commander">Commander</option>
+          <option value="Lieutenant Commander">Lieutenant Commander</option>
+          <option value="Lieutenant">Lieutenant</option>
+          <option value="Ensign">Ensign</option>
+          <option value="Crewman">Crewman</option>
+          <option value="Cadet">Cadet</option>
+        </select>
+        <br>
+        <button type="submit">Engage</button>
+      </div>
+    </form>
+
+  </div>
+  <br>
+  <br>
+  <div class="row">
     <div class="col-md-4">
       <h2>Devoured These Burgers Are Not!</h2>
       <br>
       <ul>
         {{#each burgers}} {{#unless devoured}}
-        <li>{{burger_name}}
-          <button class="devour" data-id="{{id}}">Devour</button>
+        <li>{{burger_name}} &nbsp;
+          <button class="devour" data-id="{{id}}" data-custid="{{customer.id}}">Devour</button>
+          <br> By {{customer.customer_name}} ({{customer.currentRank}})
         </li>
         <br> {{/unless}} {{/each}}
       </ul>
@@ -54,8 +89,15 @@
       <form class="create-form">
 
         <div class="form-group">
-          <label for="ca">Burger Name:</label>
+          <label for="name">Burger Name:</label>
           <input type="text" id="burger" name="name">
+          <br>
+          <label for="custList">Customer Name:</label>
+          <select name="custList" id="custList" form="create-form">
+            {{#each customers}}
+            <option value="{{id}}">{{customer_name}}</option>
+            {{/each}}
+          </select>
           <br>
           <button type="submit">Make It So</button>
         </div>
@@ -70,7 +112,8 @@
       <ul>
         {{#each burgers}} {{#if devoured}}
         <p>Mmm...That was a great
-          <b>{{burger_name}}</b>!</p>
+          <b>{{burger_name}}</b>!
+          <br> (Courtesy of {{customer.currentRank}} {{customer.customer_name}})</p>
         {{/if}} {{/each}}
       </ul>
       <br>
@@ -80,4 +123,20 @@
     <br>
     <br>
     <br>
+  </div>
+
+  <div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+        </div>
+      </div>
+    </div>
   </div>

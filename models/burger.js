@@ -10,14 +10,14 @@ module.exports = function (sequelize, DataTypes) {
     }
   });
 
-  // Burger.associate = function (models) {
-  //   Burger.belongsTo(models.Customer, {
-  //     onDelete: "CASCADE",
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
+  Burger.associate = function (models) {
+    Burger.belongsTo(models.customer, {
+      onDelete: "CASCADE",
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
 
   return Burger;
 };

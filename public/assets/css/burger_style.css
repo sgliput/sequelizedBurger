@@ -52,11 +52,24 @@ h1, h2, button{
     border-top: 2px solid black;
 }
 
-.prosper{
+.prosper, .nameInput, .customer-form, .rankList{
     margin: 0 auto;
 }
 
 .replicated{
     margin: 30% 0 0 0;
     display: none;
+}
+
+.devour{
+    float: right;
+}
+
+.modal-content{
+    background-image: url("../img/space.jpg");
+    color: white;
+}
+
+.close{
+    color: white;
 }
